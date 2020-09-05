@@ -1,6 +1,7 @@
 package com.github.freddyyj.localizationapi.langfile;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
@@ -14,7 +15,8 @@ public class LanguageFile {
     private String languageCode;
     public LanguageFile(String path,String languageCode) throws FileNotFoundException {
         JsonReader reader=new JsonReader(new FileReader(path+"/"+languageCode+".json"));
-        stringList= (JsonObject) JsonParser.parseReader(reader);
+        JsonElement element = JsonParser.parseReader(reader);
+        stringList=element.getAsJsonObject();
         this.languageCode=languageCode;
     }
     public String getString(String key){
