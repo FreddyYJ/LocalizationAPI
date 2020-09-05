@@ -4,17 +4,18 @@ import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.bukkit.Bukkit;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Language {
     private static HashMap<LanguageCode,Language> languageList=new HashMap<>();
     private LanguageFile file;
     private LanguageCode code;
-    protected Language(String languageCode) throws FileNotFoundException {
+    protected Language(String languageCode) throws IOException {
         file=new LanguageFile(Core.dataFolder.getPath(),languageCode);
         code=LanguageCode.valueOf(languageCode);
     }
-    public static Language getLanguage(LanguageCode code) throws FileNotFoundException {
+    public static Language getLanguage(LanguageCode code) throws IOException {
         if (languageList.containsKey(code)) return languageList.get(code);
         else{
             Language language=new Language(code.toString());

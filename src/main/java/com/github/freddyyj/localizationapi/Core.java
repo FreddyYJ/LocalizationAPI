@@ -23,5 +23,6 @@ public class Core extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e){
         PlayerLocalization player=PlayerLocalization.fromPlayer(e.getPlayer());
         player.sendMessage("message.welcome");
+        e.getPlayer().sendMessage("Current language: "+e.getPlayer().getLocale());
     }
 }

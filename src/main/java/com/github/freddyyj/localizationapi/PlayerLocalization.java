@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,8 +17,12 @@ public class PlayerLocalization {
         this.player=player;
         try {
             language=Language.getLanguage(LanguageCode.valueOf(player.getLocale()));
-        } catch (FileNotFoundException e) {
-            language=Language.getLanguage(LanguageCode.en_us);
+        } catch (IOException e) {
+            try {
+                language=Language.getLanguage(LanguageCode.en_us);
+            } catch (IOException ioException) {
+                throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",ioException);
+            }
         }
     }
     public static PlayerLocalization fromPlayer(Player player){
@@ -25,11 +30,11 @@ public class PlayerLocalization {
             if (playerList.get(i).player.getUniqueId().equals(player.getUniqueId())) {
                 try {
                     playerList.get(i).language=Language.getLanguage(LanguageCode.valueOf(player.getLocale()));
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     try {
                         playerList.get(i).language=Language.getLanguage(LanguageCode.en_us);
-                    } catch (FileNotFoundException fileNotFoundException) {
-                        throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",fileNotFoundException);
+                    } catch (IOException e2) {
+                        throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",e2);
                     }
                 }
             }
