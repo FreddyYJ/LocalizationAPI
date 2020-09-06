@@ -48,6 +48,10 @@ public class Core extends JavaPlugin implements Listener {
                 return true;
             }
         }
+        else if (args[0].equals("test") && sender instanceof Player){
+            PlayerLocalization.fromPlayer((Player) sender).sendMessage("message.welcome");
+            return true;
+        }
         return false;
     }
 

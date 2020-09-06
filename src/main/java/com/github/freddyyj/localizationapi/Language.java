@@ -39,7 +39,12 @@ public class Language {
         }
     }
     public String getText(String key){
-        return file.getString(key);
+        String translated=file.getString(key);
+        if (translated==null) {
+            translated=languageList.get("en_us").getText(key);
+            if (translated==null) translated=key;
+        }
+        return translated;
     }
     public String getLanguageCode(){
         return code;
