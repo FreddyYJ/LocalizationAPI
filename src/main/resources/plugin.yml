@@ -2,3 +2,7 @@ name: LocalizationAPI
 main: com.github.freddyyj.localizationapi.Core
 version: 0.0.2
 author: FreddyYJ_
+commands:
+  lang:
+    usage: "/lang <command>"
+    description: Default command.
