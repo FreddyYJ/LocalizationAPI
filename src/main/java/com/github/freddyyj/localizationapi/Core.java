@@ -37,7 +37,11 @@ public class Core extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args[0].equals("set") && args.length>=2 && sender instanceof Player){ // /lang set <language code> [player]
+        if (args.length==0 && sender instanceof Player){
+            sender.sendMessage("Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getLanguageCode());
+            return true;
+        }
+        else if (args[0].equals("set") && args.length>=2 && sender instanceof Player){ // /lang set <language code> [player]
             if (args.length==2){
                 try {
                     PlayerLocalization.fromPlayer((Player) sender).setLanguage(Language.getLanguage(args[1]));
@@ -50,6 +54,10 @@ public class Core extends JavaPlugin implements Listener {
         }
         else if (args[0].equals("test") && sender instanceof Player){
             PlayerLocalization.fromPlayer((Player) sender).sendMessage("message.welcome");
+            return true;
+        }
+        else if (args[0].equals("list")){
+            sender.sendMessage("Current language list: "+Arrays.toString(languageCodeList));
             return true;
         }
         return false;
