@@ -18,7 +18,7 @@ public class LanguageFile {
     public LanguageFile(String path,String languageCode) throws IOException {
         stringList=new HashMap<>();
 
-        JsonReader reader=new JsonReader(new FileReader(path+"/"+languageCode+".json"));
+        JsonReader reader=new JsonReader(new FileReader(path+"/lang/"+languageCode+".json"));
         reader.beginObject();
         while(reader.hasNext()){
             stringList.put(reader.nextName(),reader.nextString());

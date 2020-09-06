@@ -13,39 +13,23 @@ public class PlayerLocalization {
     private Player player;
     private static ArrayList<PlayerLocalization> playerList=new ArrayList<>();
     private Language language;
-    protected PlayerLocalization(Player player) throws FileNotFoundException {
+    protected PlayerLocalization(Player player){
         this.player=player;
+
         try {
-            language=Language.getLanguage(LanguageCode.valueOf(player.getLocale()));
+            language=Language.getLanguage("en_us");
         } catch (IOException e) {
-            try {
-                language=Language.getLanguage(LanguageCode.en_us);
-            } catch (IOException ioException) {
-                throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",ioException);
-            }
+            throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",e);
         }
     }
     public static PlayerLocalization fromPlayer(Player player){
         for (int i=0;i<playerList.size();i++){
             if (playerList.get(i).player.getUniqueId().equals(player.getUniqueId())) {
-                try {
-                    playerList.get(i).language=Language.getLanguage(LanguageCode.valueOf(player.getLocale()));
-                } catch (IOException e) {
-                    try {
-                        playerList.get(i).language=Language.getLanguage(LanguageCode.en_us);
-                    } catch (IOException e2) {
-                        throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",e2);
-                    }
-                }
+                return playerList.get(i);
             }
         }
 
-        PlayerLocalization playerLocalization= null;
-        try {
-            playerLocalization = new PlayerLocalization(player);
-        } catch (FileNotFoundException e) {
-            throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",e);
-        }
+        PlayerLocalization playerLocalization = new PlayerLocalization(player);
         playerList.add(playerLocalization);
         return playerLocalization;
     }
