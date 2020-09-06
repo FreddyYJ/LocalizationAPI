@@ -44,5 +44,8 @@ public class PlayerLocalization {
     public Language getLanguage(){
         return language;
     }
+    public void setLanguage(Language language){
+        this.language=language;
+    }
 
 }
