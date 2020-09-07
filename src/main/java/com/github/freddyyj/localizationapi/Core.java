@@ -1,5 +1,6 @@
 package com.github.freddyyj.localizationapi;
 
+import com.github.freddyyj.localizationapi.langfile.PlayerLanguageData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,8 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Core extends JavaPlugin implements Listener {
-    static File dataFolder;
+    public static File dataFolder;
     private String[] languageCodeList;
+    private static PlayerLanguageData languageSavefile;
     @Override
     public void onEnable() {
         getLogger().info("LocalizationAPI v0.0.2 loading...");
@@ -30,6 +32,7 @@ public class Core extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
         languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
+        languageSavefile=PlayerLanguageData.getInstance();
 
         getLogger().info("LocalizationAPI v0.0.2 loaded!");
         getLogger().info("Loaded languages: "+ Arrays.toString(languageCodeList));
@@ -61,6 +64,9 @@ public class Core extends JavaPlugin implements Listener {
             return true;
         }
         return false;
+    }
+    public static PlayerLanguageData getLanguageData(){
+        return languageSavefile;
     }
 
     @EventHandler
