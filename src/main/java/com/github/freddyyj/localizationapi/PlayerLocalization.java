@@ -14,12 +14,15 @@ public class PlayerLocalization {
     private static ArrayList<PlayerLocalization> playerList=new ArrayList<>();
     private Language language;
     protected PlayerLocalization(Player player){
+        this(player,"en_us");
+    }
+    protected PlayerLocalization(Player player,String languageCode){
         this.player=player;
 
         try {
-            language=Language.getLanguage("en_us");
+            language=Language.getLanguage(languageCode);
         } catch (IOException e) {
-            throw new DefaultLanguageFileNotFoundException("Default language file (en_us.json) not found! ",e);
+            throw new DefaultLanguageFileNotFoundException("Language file ("+languageCode+".json) not found! ",e);
         }
     }
     public static PlayerLocalization fromPlayer(Player player){
@@ -29,7 +32,13 @@ public class PlayerLocalization {
             }
         }
 
-        PlayerLocalization playerLocalization = new PlayerLocalization(player);
+        PlayerLocalization playerLocalization;
+        if (Core.getLanguageData().hasPlayer(player.getUniqueId())){
+            playerLocalization = new PlayerLocalization(player,Core.getLanguageData().getLanguageCode(player.getUniqueId()));
+        }
+        else{
+            playerLocalization = new PlayerLocalization(player);
+        }
         playerList.add(playerLocalization);
         return playerLocalization;
     }
@@ -37,6 +46,10 @@ public class PlayerLocalization {
     public void sendMessage(String message){
         String translated=language.getText(message);
         player.sendMessage(translated);
+    }
+    public String getMessage(String message){
+        String translated=language.getText(message);
+        return translated;
     }
     public Player toPlayer(){
         return player;

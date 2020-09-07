@@ -41,7 +41,7 @@ public class Language {
     public String getText(String key){
         String translated=file.getString(key);
         if (translated==null) {
-            translated=languageList.get("en_us").getText(key);
+            translated=languageList.get("en_us").getFile().getString(key);
             if (translated==null) translated=key;
         }
         return translated;
@@ -51,5 +51,8 @@ public class Language {
     }
     public static Set<String> getLanguageCodes(){
         return languageList.keySet();
+    }
+    protected LanguageFile getFile(){
+        return file;
     }
 }

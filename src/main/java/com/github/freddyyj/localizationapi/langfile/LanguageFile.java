@@ -28,7 +28,8 @@ public class LanguageFile {
         this.languageCode=languageCode;
     }
     public String getString(String key){
-        return stringList.get(key);
+        if (key==null) return null;
+        else return stringList.get(key);
     }
     public String getLanguageCode(){
         return languageCode;

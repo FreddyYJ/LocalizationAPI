@@ -39,8 +39,15 @@ public class Core extends JavaPlugin implements Listener {
     }
 
     @Override
+    public void onDisable() {
+        languageSavefile.save();
+
+        getLogger().info("LocalizationAPI v0.0.2 disabled.");
+    }
+
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length==0 && sender instanceof Player){
+        if (args[0].equals("get") && sender instanceof Player){ // /lang get [player]
             sender.sendMessage("Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getLanguageCode());
             return true;
         }
@@ -48,6 +55,7 @@ public class Core extends JavaPlugin implements Listener {
             if (args.length==2){
                 try {
                     PlayerLocalization.fromPlayer((Player) sender).setLanguage(Language.getLanguage(args[1]));
+                    languageSavefile.setPlayerLanguageCode(((Player) sender).getUniqueId(),args[1]);
                 } catch (IOException e) {
                     sender.sendMessage("No language code found: "+args[1]);
                     return false;
@@ -55,11 +63,11 @@ public class Core extends JavaPlugin implements Listener {
                 return true;
             }
         }
-        else if (args[0].equals("test") && sender instanceof Player){
+        else if (args[0].equals("test") && sender instanceof Player){ // /lang test
             PlayerLocalization.fromPlayer((Player) sender).sendMessage("message.welcome");
             return true;
         }
-        else if (args[0].equals("list")){
+        else if (args[0].equals("list")){ // /lang list
             sender.sendMessage("Current language list: "+Arrays.toString(languageCodeList));
             return true;
         }
@@ -73,6 +81,6 @@ public class Core extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e){
         PlayerLocalization player=PlayerLocalization.fromPlayer(e.getPlayer());
         player.sendMessage("message.welcome");
-        e.getPlayer().sendMessage("Current language: "+e.getPlayer().getLocale());
+        player.sendMessage("message.welcome1");
     }
 }
