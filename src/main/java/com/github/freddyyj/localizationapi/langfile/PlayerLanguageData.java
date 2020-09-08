@@ -48,6 +48,9 @@ public class PlayerLanguageData{
     public boolean hasPlayer(UUID player){
         return playerLanguageList.containsKey(player);
     }
+    public void removePlayer(UUID player){
+        playerLanguageList.remove(player);
+    }
     public void save() {
         Set<UUID> players=playerLanguageList.keySet();
 

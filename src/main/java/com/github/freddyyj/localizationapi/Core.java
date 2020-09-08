@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -80,7 +82,18 @@ public class Core extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         PlayerLocalization player=PlayerLocalization.fromPlayer(e.getPlayer());
+        e.getPlayer().sendMessage("message.welcome");
         player.sendMessage("message.welcome");
         player.sendMessage("message.welcome1");
+
+        getLogger().info(player.toPlayer().getName()+" entered!");
+
+    }
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerQuit(PlayerQuitEvent e){
+        languageSavefile.removePlayer(e.getPlayer().getUniqueId());
+        PlayerLocalization.fromPlayer(e.getPlayer()).remove();
+
+        getLogger().info(e.getPlayer().getName()+" leave server. Localization data removed.");
     }
 }

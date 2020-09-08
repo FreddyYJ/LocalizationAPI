@@ -27,7 +27,7 @@ public class PlayerLocalization {
     }
     public static PlayerLocalization fromPlayer(Player player){
         for (int i=0;i<playerList.size();i++){
-            if (playerList.get(i).player.getUniqueId().equals(player.getUniqueId())) {
+            if (playerList.get(i).player.getName().equals(player.getName())) {
                 return playerList.get(i);
             }
         }
@@ -50,6 +50,9 @@ public class PlayerLocalization {
     public String getMessage(String message){
         String translated=language.getText(message);
         return translated;
+    }
+    public void remove(){
+        playerList.remove(this);
     }
     public Player toPlayer(){
         return player;
