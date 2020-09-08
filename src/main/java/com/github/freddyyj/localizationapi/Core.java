@@ -91,7 +91,6 @@ public class Core extends JavaPlugin implements Listener {
     }
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent e){
-        languageSavefile.removePlayer(e.getPlayer().getUniqueId());
         PlayerLocalization.fromPlayer(e.getPlayer()).remove();
 
         getLogger().info(e.getPlayer().getName()+" leave server. Localization data removed.");
