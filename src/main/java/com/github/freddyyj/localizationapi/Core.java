@@ -54,17 +54,23 @@ public class Core extends JavaPlugin implements Listener {
         if (args.length==0){
             sender.sendMessage(PREFIX+"Command list:");
             sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang"+ChatColor.WHITE+": Show command list.");
-            sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang get [player]"+ChatColor.WHITE+": Get [player] or your current language.");
-            sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang set <language code> [player]"+ChatColor.WHITE+": Change [player] or your current language.");
-            sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang test"+ChatColor.WHITE+": Test with default message(message.welcome).");
-            sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang list"+ChatColor.WHITE+": Show language list.");
+            if (sender.hasPermission("localization.get.other"))
+                sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang get [player]"+ChatColor.WHITE+": Get [player] or your current language.");
+            else if (sender.hasPermission("localization.get"))
+                sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang get"+ChatColor.WHITE+": Get your current language.");
+            if (sender.hasPermission("localization.set.other"))
+                sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang set <language code> [player]"+ChatColor.WHITE+": Change [player] or your current language.");
+            else if (sender.hasPermission("localization.set"))
+                sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang set <language code>"+ChatColor.WHITE+": Change your current language.");
+            if (sender.hasPermission("localization.test")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang test"+ChatColor.WHITE+": Test with default message(message.welcome).");
+            if (sender.hasPermission("localization.list")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang list"+ChatColor.WHITE+": Show language list.");
             return true;
         }
-        else if (args[0].equals("get") && sender instanceof Player){ // /lang get [player]
+        else if (args[0].equals("get") && sender instanceof Player && sender.hasPermission("localization.get")){ // /lang get [player]
             sender.sendMessage(PREFIX+"Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getLanguageCode());
             return true;
         }
-        else if (args[0].equals("set") && args.length>=2 && sender instanceof Player){ // /lang set <language code> [player]
+        else if (args[0].equals("set") && args.length>=2 && sender instanceof Player && sender.hasPermission("localization.set")){ // /lang set <language code> [player]
             if (args.length==2){
                 try {
                     PlayerLocalization.fromPlayer((Player) sender).setLanguage(Language.getLanguage(args[1]));
@@ -79,11 +85,11 @@ public class Core extends JavaPlugin implements Listener {
             }
             return true;
         }
-        else if (args[0].equals("test") && sender instanceof Player){ // /lang test
+        else if (args[0].equals("test") && sender instanceof Player && sender.hasPermission("localization.test")){ // /lang test
             sender.sendMessage(PREFIX+PlayerLocalization.fromPlayer((Player) sender).getMessage("message.welcome"));
             return true;
         }
-        else if (args[0].equals("list")){ // /lang list
+        else if (args[0].equals("list") && sender.hasPermission("localization.list")){ // /lang list
             sender.sendMessage(PREFIX+"Current language list: "+Arrays.toString(languageCodeList));
             return true;
         }
