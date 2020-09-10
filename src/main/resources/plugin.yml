@@ -1,8 +1,31 @@
 name: LocalizationAPI
 main: com.github.freddyyj.localizationapi.Core
-version: 0.0.2
+version: 0.0.4
 author: FreddyYJ_
 commands:
   lang:
     usage: "/lang <command>"
     description: Default command.
+permissions:
+  localization.get:
+    description: Permission to run /lang get.
+    default: true
+  localization.get.other:
+    description: Permission to run /lang get [player].
+    default: op
+    children:
+      localization.get: true
+  localization.set:
+    description: Permission to run /lang set <language>
+    default: true
+  localization.set.other:
+    description: Permission to run /lang set <language> [player]
+    default: op
+    children:
+      localization.set: true
+  localization.test:
+    description: Permission to run /lang test
+    default: op
+  localization.list:
+    description: Permission to run /lang list
+    default: true
