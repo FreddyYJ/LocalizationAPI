@@ -85,6 +85,7 @@ public class Core extends JavaPlugin implements Listener {
         e.getPlayer().sendMessage("message.welcome");
         player.sendMessage("message.welcome");
         player.sendMessage("message.welcome1");
+        player.sendMessage("message.welcome2");
 
         getLogger().info(player.toPlayer().getName()+" entered!");
 
