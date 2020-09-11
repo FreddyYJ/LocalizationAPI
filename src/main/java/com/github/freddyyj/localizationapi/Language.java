@@ -1,5 +1,6 @@
 package com.github.freddyyj.localizationapi;
 
+import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.bukkit.Bukkit;
 
@@ -31,7 +32,10 @@ public class Language {
 
         File languageFolder=new File(Core.dataFolder.getPath()+"/lang");
         File[] fileList=languageFolder.listFiles();
-        for (int i=0;i<languageFolder.listFiles().length;i++){
+        if (fileList.length==0){
+            throw new LanguageFileNotFoundException("No language file found! Add en_us.json for default.");
+        }
+        for (int i=0;i<fileList.length;i++){
             String fileName=fileList[i].getName().split(".json")[0];
             LanguageFile file=new LanguageFile(languageFolder.getPath(),fileName);
 

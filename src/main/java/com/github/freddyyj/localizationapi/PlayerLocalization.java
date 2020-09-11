@@ -1,6 +1,6 @@
 package com.github.freddyyj.localizationapi;
 
-import com.github.freddyyj.localizationapi.exceptions.DefaultLanguageFileNotFoundException;
+import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public class PlayerLocalization {
         try {
             language=Language.getLanguage(languageCode);
         } catch (IOException e) {
-            throw new DefaultLanguageFileNotFoundException("Language file ("+languageCode+".json) not found! ",e);
+            throw new LanguageFileNotFoundException("Language file ("+languageCode+".json) not found! ",e);
         }
     }
     public static PlayerLocalization fromPlayer(Player player){

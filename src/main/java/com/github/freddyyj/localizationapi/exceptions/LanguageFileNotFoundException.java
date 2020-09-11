@@ -1,19 +1,19 @@
 package com.github.freddyyj.localizationapi.exceptions;
 
-public class DefaultLanguageFileNotFoundException extends RuntimeException{
+public class LanguageFileNotFoundException extends RuntimeException{
     private String message;
     private Throwable cause;
-    public DefaultLanguageFileNotFoundException(String message,Throwable cause){
+    public LanguageFileNotFoundException(String message,Throwable cause){
         this.message=message;
         this.cause=cause;
     }
-    public DefaultLanguageFileNotFoundException(String message){
+    public LanguageFileNotFoundException(String message){
         this(message,null);
     }
-    public DefaultLanguageFileNotFoundException(Throwable cause){
+    public LanguageFileNotFoundException(Throwable cause){
         this("No default language file found!",cause);
     }
-    public DefaultLanguageFileNotFoundException(){
+    public LanguageFileNotFoundException(){
         this("No default language file found!");
     }
 
