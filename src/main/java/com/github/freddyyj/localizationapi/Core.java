@@ -9,20 +9,34 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Main class for LocalizationAPI. Extends {@link JavaPlugin}. Don't create this object manually.
+ * <p>
+ *     Implements {@link Listener} to listen player join and quit event.
+ *
+ *     Don't create this class manually. Use {@link org.bukkit.plugin.PluginManager#getPlugin(String)} to get this object.
+ * </p>
+ * @author FreddyYJ_
+ */
 public class Core extends JavaPlugin implements Listener {
+    /**
+     * Default prefix for LocalizationAPI.
+     */
     public static final String PREFIX= ChatColor.AQUA+"["+ChatColor.GREEN+"LocalizationAPI"+ChatColor.AQUA+"] "+ChatColor.WHITE;
-    public static File dataFolder;
+    private static File dataFolder;
     private String[] languageCodeList;
     private static PlayerLanguageData languageSavefile;
+
+    /**
+     * Override {@link JavaPlugin#onEnable()}. Don't call this method.
+     */
     @Override
     public void onEnable() {
         getLogger().info("LocalizationAPI v0.0.2 loading...");
@@ -42,6 +56,9 @@ public class Core extends JavaPlugin implements Listener {
         getLogger().info("Loaded languages: "+ Arrays.toString(languageCodeList));
     }
 
+    /**
+     * Override {@link JavaPlugin#onDisable()}. Don't call this method.
+     */
     @Override
     public void onDisable() {
         languageSavefile.save();
@@ -49,6 +66,14 @@ public class Core extends JavaPlugin implements Listener {
         getLogger().info("LocalizationAPI v0.0.2 disabled.");
     }
 
+    /**
+     * Override {@link JavaPlugin#onCommand(CommandSender, Command, String, String[])}. Don't call this method.
+     * @param sender command sender
+     * @param command command class
+     * @param label string of command arguments
+     * @param args string array of command arguments
+     * @return always be true
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length==0){
@@ -109,8 +134,24 @@ public class Core extends JavaPlugin implements Listener {
             return true;
         }
     }
+
+    /**
+     * Get {@link PlayerLanguageData} for save player data.
+     * <p>
+     *     {@link PlayerLanguageData#getInstance()} works same.
+     * </p>
+     * @return player language data
+     */
     public static PlayerLanguageData getLanguageData(){
         return languageSavefile;
+    }
+
+    /**
+     * Get data folder of this plugin.
+     * @return data folder
+     */
+    public static File getDefaultFolder(){
+        return dataFolder;
     }
     private void printCommandError(CommandSender sender){
         sender.sendMessage(PREFIX + "Unknown Command! Command list:");
@@ -141,12 +182,27 @@ public class Core extends JavaPlugin implements Listener {
         if (sender.hasPermission("localization.list")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang list"+ChatColor.WHITE+": Show language list.");
     }
 
+    /**
+     * player join event listener
+     * <p>
+     *     Don't call this method manually.
+     * </p>
+     * @param e {@link PlayerJoinEvent} object
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         PlayerLocalization player=PlayerLocalization.fromPlayer(e.getPlayer());
         
         getLogger().info(player.toPlayer().getName()+" entered!");
     }
+
+    /**
+     * player quit event listener
+     * <p>
+     *     Don't call this method manually.
+     * </p>
+     * @param e {@link PlayerQuitEvent} object
+     */
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent e){
         PlayerLocalization.fromPlayer(e.getPlayer()).remove();

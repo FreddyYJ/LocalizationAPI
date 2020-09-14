@@ -1,5 +1,13 @@
 package com.github.freddyyj.localizationapi.exceptions;
 
+/**
+ * throws when no language file exist
+ * <p>
+ *     This exception threw when no language file added under LocalizationAPI/lang.
+ *     To avoid, add en_us.json.
+ * </p>
+ * @author FreddyYJ_
+ */
 public class LanguageFileNotFoundException extends RuntimeException{
     private String message;
     private Throwable cause;
