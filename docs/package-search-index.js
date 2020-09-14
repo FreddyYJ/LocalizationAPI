@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.github.freddyyj.localizationapi"},{"l":"com.github.freddyyj.localizationapi.exceptions"},{"l":"com.github.freddyyj.localizationapi.langfile"}]
