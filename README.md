@@ -18,7 +18,7 @@ Installation of this plugin is same as other plugins. But, it needs default lang
 2. Add this file at (your server directory)/plugin/LocalizationAPI/lang.
 3. Add plugin file at /plugin.
 4. That's all!
-For developers, visit wiki.
+For developers, visit wiki or https://freddyyj.github.io/LocalizationAPI/.
 
 # Commands
 ```/lang```
