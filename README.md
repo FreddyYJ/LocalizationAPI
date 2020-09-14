@@ -12,5 +12,12 @@ Installation of this plugin is same as other plugins. But, it needs default lang
         "message1":"Hello",
         "message2":"World!",
         ...
-    }```
+    }
+```
 2. Add this file at (your server directory)/plugin/LocalizationAPI/lang.
+3. Add plugin file at /plugin.
+4. That's all!
+
+# Commands
+## /lang
+* Show all commands that this player can use.
