@@ -19,5 +19,5 @@ Installation of this plugin is same as other plugins. But, it needs default lang
 4. That's all!
 
 # Commands
-#### /lang
+### /lang
 * Show all commands that this player can use.
