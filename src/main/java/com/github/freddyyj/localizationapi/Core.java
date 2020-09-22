@@ -12,8 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -51,6 +50,24 @@ public class Core extends JavaPlugin implements Listener {
         }
         languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
         languageSavefile=PlayerLanguageData.getInstance();
+
+        if (!Language.hasLanguage("en_us")){
+            getLogger().info("No default language file(en_us.json) detected. Creating...");
+            File english=new File(dataFolder.getPath()+"/lang/en_us.json");
+            if(!english.exists()) {
+                try {
+                    english.createNewFile();
+                    Writer writer=new FileWriter(english);
+
+                    writer.write("{\n}");
+                    writer.close();
+                    Language.reload();
+                    languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         getLogger().info("LocalizationAPI v0.0.2 loaded!");
         getLogger().info("Loaded languages: "+ Arrays.toString(languageCodeList));

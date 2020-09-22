@@ -105,6 +105,15 @@ public class Language {
     }
 
     /**
+     * Check language object exist
+     * @param languageCode language code
+     * @return true if exist
+     */
+    public static boolean hasLanguage(String languageCode){
+        return languageList.containsKey(languageCode);
+    }
+
+    /**
      * Get language file.
      * @return language file
      */
