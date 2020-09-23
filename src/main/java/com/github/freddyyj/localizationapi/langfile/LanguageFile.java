@@ -2,6 +2,7 @@ package com.github.freddyyj.localizationapi.langfile;
 
 import com.github.freddyyj.localizationapi.Core;
 import com.google.gson.stream.JsonReader;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class LanguageFile {
      * @param key key text
      * @return value text
      */
+    @Nullable
     public String getString(String key){
         if (key==null) return null;
         else return stringList.get(key);

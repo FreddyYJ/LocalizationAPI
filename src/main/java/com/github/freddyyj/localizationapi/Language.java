@@ -24,6 +24,24 @@ public class Language {
     private static HashMap<String,Language> languageList=new HashMap<>();
     private LanguageFile file;
     private String code;
+    private String name;
+    private String region;
+
+    /**
+     * Get name of this language.
+     * @return language name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get region of this language.
+     * @return language region
+     */
+    public String getRegion() {
+        return region;
+    }
 
     /**
      * Constructor with specific language code
@@ -33,6 +51,11 @@ public class Language {
     protected Language(String languageCode) throws IOException {
         file=new LanguageFile(Core.getDefaultFolder().getPath()+"/lang",languageCode);
         code=languageCode;
+        name=file.getString(DefaultKey.NAME.toString());
+        if (name==null) throw new NullPointerException("No language name specified! Add language.name in language file.");
+
+        region=file.getString(DefaultKey.REGION.toString());
+        if (region==null) throw new NullPointerException("No language region specified! Add language.region in language file.");
     }
 
     /**
