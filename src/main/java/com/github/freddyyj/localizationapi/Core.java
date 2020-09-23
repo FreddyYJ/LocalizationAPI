@@ -59,7 +59,11 @@ public class Core extends JavaPlugin implements Listener {
                     english.createNewFile();
                     Writer writer=new FileWriter(english);
 
-                    writer.write("{\n}");
+                    writer.write("{\n");
+                    writer.write("    \"language.name\": \"English\",\n");
+                    writer.write("    \"language.region\": \"USA\",\n");
+                    writer.write("    \"language.code\": \"en_us\"\n");
+                    writer.write("}");
                     writer.close();
                     Language.reload();
                     languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
@@ -101,9 +105,9 @@ public class Core extends JavaPlugin implements Listener {
             if (sender.hasPermission("localization.get.other") && args.length==2){
                 Player targetPlayer=Bukkit.getPlayer(args[1]);
                 if (targetPlayer==null) throw new NullPointerException("Not exist player: "+args[1]);
-                else sender.sendMessage(PREFIX+"Current language of "+targetPlayer.getName()+": "+PlayerLocalization.fromPlayer(targetPlayer).getLanguage().getLanguageCode());
+                else sender.sendMessage(PREFIX+"Current language of "+targetPlayer.getName()+": "+PlayerLocalization.fromPlayer(targetPlayer).getLanguage().getName());
             }
-            else if (args.length==1) sender.sendMessage(PREFIX+"Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getLanguageCode());
+            else if (args.length==1) sender.sendMessage(PREFIX+"Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getName());
             else printCommandError(sender);
             return true;
         }
