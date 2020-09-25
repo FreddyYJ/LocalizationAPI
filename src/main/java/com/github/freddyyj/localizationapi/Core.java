@@ -33,6 +33,12 @@ public class Core extends JavaPlugin implements Listener {
     private String[] languageCodeList;
     private static PlayerLanguageData languageSavefile;
 
+    public static LanguageList getAvailableLanguageList() {
+        return availableLanguageList;
+    }
+
+    private static LanguageList availableLanguageList;
+
     /**
      * Override {@link JavaPlugin#onEnable()}. Don't call this method.
      */
@@ -50,6 +56,11 @@ public class Core extends JavaPlugin implements Listener {
         }
         languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
         languageSavefile=PlayerLanguageData.getInstance();
+        try {
+            availableLanguageList=new LanguageList(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (!Language.hasLanguage("en_us")){
             getLogger().info("No default language file(en_us.json) detected. Creating...");
@@ -60,9 +71,9 @@ public class Core extends JavaPlugin implements Listener {
                     Writer writer=new FileWriter(english);
 
                     writer.write("{\n");
-                    writer.write("    \"language.name\": \"English\",\n");
-                    writer.write("    \"language.region\": \"USA\",\n");
-                    writer.write("    \"language.code\": \"en_us\"\n");
+                    writer.write("    \"language.name\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
+                    writer.write("    \"language.region\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
+                    writer.write("    \"language.code\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
                     writer.write("}");
                     writer.close();
                     Language.reload();

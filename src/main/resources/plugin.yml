@@ -1,6 +1,6 @@
 name: LocalizationAPI
 main: com.github.freddyyj.localizationapi.Core
-version: 0.0.4
+version: 0.1.0
 author: FreddyYJ_
 commands:
   lang:
