@@ -6,6 +6,7 @@ import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -142,5 +143,8 @@ public class Language {
      */
     protected LanguageFile getFile(){
         return file;
+    }
+    static Map<String,Language> getLanguageList(){
+        return languageList;
     }
 }
