@@ -1,9 +1,12 @@
 package com.github.freddyyj.localizationapi.langfile;
 
 import com.github.freddyyj.localizationapi.Core;
-import com.google.gson.stream.JsonReader;
 import org.jetbrains.annotations.Nullable;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,12 +38,14 @@ public class LanguageFile {
     public LanguageFile(String path,String languageCode) throws IOException {
         stringList=new HashMap<>();
 
-        JsonReader reader=new JsonReader(new FileReader(path+"/"+languageCode+".json"));
-        reader.beginObject();
-        while(reader.hasNext()){
-            stringList.put(reader.nextName(),reader.nextString());
+        JsonReader reader= Json.createReader(new FileReader(path + "/" + languageCode + ".json"));
+        JsonObject object=reader.readObject();
+        String[] keys=object.keySet().toArray(new String[0]);
+
+        for (int i=0;i< keys.length;i++){
+            stringList.put(keys[i], object.getString(keys[i]));
         }
-        reader.endObject();
+        reader.close();
 
         this.languageCode=languageCode;
     }

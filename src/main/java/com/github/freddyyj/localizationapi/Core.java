@@ -57,7 +57,7 @@ public class Core extends JavaPlugin implements Listener {
         languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
         languageSavefile=PlayerLanguageData.getInstance();
         try {
-            availableLanguageList=new LanguageList(this);
+            availableLanguageList=LanguageList.getInstance(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,9 +71,9 @@ public class Core extends JavaPlugin implements Listener {
                     Writer writer=new FileWriter(english);
 
                     writer.write("{\n");
-                    writer.write("    \"language.name\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
-                    writer.write("    \"language.region\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
-                    writer.write("    \"language.code\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
+                    writer.write("    \""+DefaultKey.NAME.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
+                    writer.write("    \""+DefaultKey.REGION.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
+                    writer.write("    \""+DefaultKey.CODE.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
                     writer.write("}");
                     writer.close();
                     Language.reload();

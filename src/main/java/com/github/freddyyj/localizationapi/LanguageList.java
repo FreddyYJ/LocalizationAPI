@@ -1,41 +1,55 @@
 package com.github.freddyyj.localizationapi;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Set;
 
 public class LanguageList {
     private HashMap<String,LanguageInfo> languageList;
-    LanguageList(Core core) throws IOException {
+    private static LanguageList instance=null;
+    protected LanguageList(Core core) throws IOException {
         languageList=new HashMap<>();
 
-        Reader reader=new InputStreamReader(core.getResource("langlist.json"));
-        JsonObject root=new Gson().fromJson(reader,JsonObject.class);
-        String[] keys=root.keySet().toArray(new String[0]);
+        JsonReader jsonReader= Json.createReader(core.getResource("langlist.json"));
+        JsonObject object=jsonReader.readObject();
+        String[] keys=object.keySet().toArray(new String[0]);
 
-        JsonObject value;
+        JsonObject language;
         for (int i=0;i< keys.length;i++){
-            value=root.getAsJsonObject(keys[i]);
-            LanguageInfo info=new LanguageInfo(value.getAsJsonPrimitive("local_name").getAsString(),value.getAsJsonPrimitive("eng_name").getAsString(),value.getAsJsonPrimitive("region").getAsString(),keys[i]);
+            language=object.getJsonObject(keys[i]);
+
+            LanguageInfo info;
+            if (language.get("region").equals(JsonValue.NULL)) info=new LanguageInfo(language.getString("local_name"),language.getString("eng_name"),null,keys[i]);
+            else info=new LanguageInfo(language.getString("local_name"),language.getString("eng_name"),language.getString("region"),keys[i]);
             languageList.put(keys[i], info);
         }
-        reader.close();
+        jsonReader.close();
+    }
+    static LanguageList getInstance(Core core) throws IOException {
+        if (instance==null) instance=new LanguageList(core);
+        return instance;
     }
     public void reload(Core core) throws IOException {
-        Reader reader=new InputStreamReader(core.getResource("langlist.json"));
-        JsonObject root=new Gson().fromJson(reader,JsonObject.class);
-        String[] keys=root.keySet().toArray(new String[0]);
+        languageList.clear();
+        JsonReader jsonReader= Json.createReader(core.getResource("langlist.json"));
+        JsonObject object=jsonReader.readObject();
+        String[] keys=object.keySet().toArray(new String[0]);
 
-        JsonObject value;
+        JsonObject language;
         for (int i=0;i< keys.length;i++){
-            value=root.getAsJsonObject(keys[i]);
-            LanguageInfo info=new LanguageInfo(value.getAsJsonPrimitive("local_name").getAsString(),value.getAsJsonPrimitive("eng_name").getAsString(),value.getAsJsonPrimitive("region").getAsString(),keys[i]);
+            language=object.getJsonObject(keys[i]);
+
+            LanguageInfo info;
+            if (language.get("region").equals(JsonValue.NULL)) info=new LanguageInfo(language.getString("local_name"),language.getString("eng_name"),null,keys[i]);
+            else info=new LanguageInfo(language.getString("local_name"),language.getString("eng_name"),language.getString("region"),keys[i]);
             languageList.put(keys[i], info);
         }
-        reader.close();
+        jsonReader.close();
     }
     public boolean hasLanguageInfo(String languageCode){
         return languageList.containsKey(languageCode);
