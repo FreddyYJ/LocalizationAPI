@@ -33,6 +33,10 @@ public class Core extends JavaPlugin implements Listener {
     private String[] languageCodeList;
     private static PlayerLanguageData languageSavefile;
 
+    /**
+     * Get language list that available.
+     * @return available language list
+     */
     public static LanguageList getAvailableLanguageList() {
         return availableLanguageList;
     }
@@ -44,7 +48,7 @@ public class Core extends JavaPlugin implements Listener {
      */
     @Override
     public void onEnable() {
-        getLogger().info("LocalizationAPI v0.0.2 loading...");
+        getLogger().info("LocalizationAPI v0.2.0 loading...");
 
         dataFolder=this.getDataFolder();
         Bukkit.getPluginManager().registerEvents(this,this);
@@ -60,6 +64,7 @@ public class Core extends JavaPlugin implements Listener {
             availableLanguageList=LanguageList.getInstance(this);
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
         if (!Language.hasLanguage("en_us")){
@@ -80,11 +85,12 @@ public class Core extends JavaPlugin implements Listener {
                     languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return;
                 }
             }
         }
 
-        getLogger().info("LocalizationAPI v0.0.2 loaded!");
+        getLogger().info("LocalizationAPI v0.2.0 loaded!");
         getLogger().info("Loaded languages: "+ Arrays.toString(languageCodeList));
     }
 
@@ -95,7 +101,7 @@ public class Core extends JavaPlugin implements Listener {
     public void onDisable() {
         languageSavefile.save();
 
-        getLogger().info("LocalizationAPI v0.0.2 disabled.");
+        getLogger().info("LocalizationAPI v0.2.0 disabled.");
     }
 
     /**
@@ -129,25 +135,26 @@ public class Core extends JavaPlugin implements Listener {
                 else{
                     try {
                         PlayerLocalization.fromPlayer(targetPlayer).setLanguage(Language.getLanguage(args[1]));
-                        languageSavefile.setPlayerLanguageCode((targetPlayer).getUniqueId(),args[1]);
-
-                        sender.sendMessage(PREFIX+"Language of "+targetPlayer.getName()+" set to "+args[1]);
                     } catch (IOException e) {
-                        sender.sendMessage(PREFIX+"No language code found: "+args[1]);
+                        sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                         return true;
                     }
+                    languageSavefile.setPlayerLanguageCode((targetPlayer).getUniqueId(),args[1]);
+
+                    sender.sendMessage(PREFIX+"Language of "+targetPlayer.getName()+" set to "+args[1]);
+                    return true;
                 }
             }
             else if (args.length==2){
                 try {
                     PlayerLocalization.fromPlayer((Player) sender).setLanguage(Language.getLanguage(args[1]));
-                    languageSavefile.setPlayerLanguageCode(((Player) sender).getUniqueId(),args[1]);
-
-                    sender.sendMessage(PREFIX+"Language set to "+args[1]);
                 } catch (IOException e) {
-                    sender.sendMessage(PREFIX+"No language code found: "+args[1]);
+                    sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                     return true;
                 }
+                languageSavefile.setPlayerLanguageCode(((Player) sender).getUniqueId(),args[1]);
+
+                sender.sendMessage(PREFIX+"Language set to "+args[1]);
                 return true;
             }
             else printCommandError(sender);
@@ -158,7 +165,15 @@ public class Core extends JavaPlugin implements Listener {
             return true;
         }
         else if (args[0].equals("list") && sender.hasPermission("localization.list")){ // /lang list
-            sender.sendMessage(PREFIX+"Current language list: "+Arrays.toString(languageCodeList));
+            sender.sendMessage(PREFIX+"Current language list:");
+            for (int i=0;i<languageCodeList.length;i++){
+                try {
+                    sender.sendMessage(PREFIX+Language.getLanguage(languageCodeList[i]).getName()+": "+languageCodeList[i]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return true;
+                }
+            }
             return true;
         }
         else {

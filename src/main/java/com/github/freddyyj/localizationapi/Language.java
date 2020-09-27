@@ -2,6 +2,7 @@ package com.github.freddyyj.localizationapi;
 
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import com.github.freddyyj.localizationapi.langfile.LanguageFile;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -113,6 +114,25 @@ public class Language {
     }
 
     /**
+     * Find {@link Language} with their local name.
+     * <p>
+     *     Exact full name required.
+     *     For example, "English (US)" for American English.
+     * </p>
+     * @param languageName full local name
+     * @return {@link Language} object
+     */
+    @Nullable
+    public static Language findByName(String languageName){
+        String[] keys=languageList.keySet().toArray(new String[0]);
+        for (int i=0;i< languageList.size();i++){
+            if (languageList.get(keys[i]).getName().equals(languageName))
+                return languageList.get(keys[i]);
+        }
+        return null;
+    }
+
+    /**
      * Get language code
      * @return language code
      */
@@ -144,6 +164,11 @@ public class Language {
     protected LanguageFile getFile(){
         return file;
     }
+
+    /**
+     * Get full language list that exist.
+     * @return {@link Map} of exist language list
+     */
     static Map<String,Language> getLanguageList(){
         return languageList;
     }

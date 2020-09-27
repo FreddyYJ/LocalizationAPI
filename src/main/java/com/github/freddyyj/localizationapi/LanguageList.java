@@ -7,11 +7,26 @@ import javax.json.JsonReader;
 import javax.json.JsonValue;
 import java.io.*;
 import java.util.HashMap;
-import java.util.Set;
 
+/**
+ * list of all available language.
+ * <p>
+ *     This class should be singleton, and created already in {@link Core}.
+ *     Use {@link Core#getAvailableLanguageList()} instead of creating manually.
+ *
+ *     This class reads "langlist.json" in jar file.
+ * </p>
+ * @author FreddyYJ_
+ */
 public class LanguageList {
     private HashMap<String,LanguageInfo> languageList;
     private static LanguageList instance=null;
+
+    /**
+     * Constructor with {@link org.bukkit.plugin.java.JavaPlugin} of this plugin.
+     * @param core default {@link Core} object
+     * @throws IOException throws when problem at reading file, especially file not found.
+     */
     protected LanguageList(Core core) throws IOException {
         languageList=new HashMap<>();
 
@@ -30,10 +45,23 @@ public class LanguageList {
         }
         jsonReader.close();
     }
+
+    /**
+     * Get instance of this class.
+     * @param core default {@link Core} object
+     * @return instance of this class
+     * @throws IOException throws when problem at reading file, especially file not found.
+     */
     static LanguageList getInstance(Core core) throws IOException {
         if (instance==null) instance=new LanguageList(core);
         return instance;
     }
+
+    /**
+     * Reload all available language.
+     * @param core default {@link Core} object
+     * @throws IOException throws when problem at reading file, especially file not found.
+     */
     public void reload(Core core) throws IOException {
         languageList.clear();
         JsonReader jsonReader= Json.createReader(core.getResource("langlist.json"));
@@ -51,9 +79,21 @@ public class LanguageList {
         }
         jsonReader.close();
     }
+
+    /**
+     * Check that langauge can be used.
+     * @param languageCode language code that want to check
+     * @return true if it's available
+     */
     public boolean hasLanguageInfo(String languageCode){
         return languageList.containsKey(languageCode);
     }
+
+    /**
+     * Get information of language.
+     * @param languageCode language code
+     * @return information of language
+     */
     public LanguageInfo getLanguageInfo(String languageCode){
         return languageList.get(languageCode);
     }
