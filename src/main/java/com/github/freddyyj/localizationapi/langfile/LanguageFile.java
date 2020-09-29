@@ -40,6 +40,20 @@ public class LanguageFile {
         this.path=path;
         stringList=new HashMap<>();
 
+        File file=new File(path + "/" + languageCode + ".json");
+        if (!file.exists()) {
+            file.createNewFile();
+            JsonWriter writer;
+            writer=Json.createWriter(new FileWriter(path + "/" + languageCode + ".json"));
+
+            JsonObjectBuilder builder=Json.createObjectBuilder();
+            builder.add(DefaultKey.NAME.toString(),Core.getAvailableLanguageList().getLanguageInfo(languageCode).getLocalName());
+            builder.add(DefaultKey.REGION.toString(), Core.getAvailableLanguageList().getLanguageInfo(languageCode).getRegion());
+            builder.add(DefaultKey.CODE.toString(),Core.getAvailableLanguageList().getLanguageInfo(languageCode).getCode());
+            writer.writeObject(builder.build());
+            writer.close();
+        }
+
         JsonReader reader= Json.createReader(new FileReader(path + "/" + languageCode + ".json"));
         JsonObject object=reader.readObject();
         String[] keys=object.keySet().toArray(new String[0]);

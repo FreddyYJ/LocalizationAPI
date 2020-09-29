@@ -25,9 +25,8 @@ public class LanguageList {
     /**
      * Constructor with {@link org.bukkit.plugin.java.JavaPlugin} of this plugin.
      * @param core default {@link Core} object
-     * @throws IOException throws when problem at reading file, especially file not found.
      */
-    protected LanguageList(Core core) throws IOException {
+    protected LanguageList(Core core) {
         languageList=new HashMap<>();
 
         JsonReader jsonReader= Json.createReader(core.getResource("langlist.json"));
@@ -60,9 +59,8 @@ public class LanguageList {
     /**
      * Reload all available language.
      * @param core default {@link Core} object
-     * @throws IOException throws when problem at reading file, especially file not found.
      */
-    public void reload(Core core) throws IOException {
+    public void reload(Core core) {
         languageList.clear();
         JsonReader jsonReader= Json.createReader(core.getResource("langlist.json"));
         JsonObject object=jsonReader.readObject();

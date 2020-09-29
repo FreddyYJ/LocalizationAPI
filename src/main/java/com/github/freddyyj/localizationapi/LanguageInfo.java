@@ -14,7 +14,7 @@ import com.github.freddyyj.localizationapi.langfile.LanguageFile;
  * </p>
  * @author FreddyYJ_
  */
-class LanguageInfo {
+public class LanguageInfo {
     private String localName;
     private String englishName;
     private String region;
@@ -69,7 +69,7 @@ class LanguageInfo {
      *     Or, Use {@link Core#getAvailableLanguageList()} to get all available language.
      * </p>
      */
-    public LanguageInfo(String localName, String englishName, String region, String code){
+    LanguageInfo(String localName, String englishName, String region, String code){
         this.localName=localName;
         this.englishName=englishName;
         this.region=region;

@@ -73,25 +73,8 @@ public class Core extends JavaPlugin implements Listener {
 
         if (!Language.hasLanguage("en_us")){
             getLogger().info("No default language file(en_us.json) detected. Creating...");
-            File english=new File(dataFolder.getPath()+"/lang/en_us.json");
-            if(!english.exists()) {
-                try {
-                    english.createNewFile();
-                    Writer writer=new FileWriter(english);
-
-                    writer.write("{\n");
-                    writer.write("    \""+ DefaultKey.NAME.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
-                    writer.write("    \""+ DefaultKey.REGION.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
-                    writer.write("    \""+ DefaultKey.CODE.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
-                    writer.write("}");
-                    writer.close();
-                    Language.reloadAll();
-                    languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-            }
+            Language.createNewLanguage("en_us");
+            languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
         }
 
         getLogger().info("LocalizationAPI v0.2.0 loaded!");
