@@ -1,7 +1,8 @@
-package com.github.freddyyj.localizationapi;
+package com.github.freddyyj.localizationapi.langfile;
 
+import com.github.freddyyj.localizationapi.Core;
+import com.github.freddyyj.localizationapi.LanguageList;
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
-import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -23,7 +24,7 @@ import java.util.Set;
  * @author FreddyYJ_
  */
 public class Language {
-    private static HashMap<String,Language> languageList=new HashMap<>();
+    private static HashMap<String, Language> languageList=new HashMap<>();
     private LanguageFile file;
     private String code;
     private String name;
@@ -79,7 +80,7 @@ public class Language {
      * Reload all languages. Required after language file changed.
      * @throws IOException Throws when error at reading language file
      */
-    public static void reload() throws IOException {
+    public static void reloadAll() throws IOException {
         languageList.clear();
 
         File languageFolder=new File(Core.getDefaultFolder().getPath()+"/lang");
@@ -169,7 +170,41 @@ public class Language {
      * Get full language list that exist.
      * @return {@link Map} of exist language list
      */
-    static Map<String,Language> getLanguageList(){
+    static Map<String, Language> getLanguageList(){
         return languageList;
+    }
+    public void reload(){
+        file.reload();
+    }
+    public void addText(String key,String value){
+        file.add(key, value);
+    }
+    public void editText(String key,String value){
+        file.edit(key, value);
+    }
+    public void removeText(String key){
+        file.remove(key);
+    }
+    public void save(){
+        file.save();
+    }
+    public static Language createNewLanguage(String languageCode){
+        if (!Language.hasLanguage(languageCode) && Core.getAvailableLanguageList().hasLanguageInfo(languageCode)){
+            try {
+                return new Language(languageCode);
+            } catch (IOException e) {
+                throw new LanguageFileNotFoundException("Language code not found: "+languageCode);
+            }
+        }
+        else if (Language.hasLanguage(languageCode)){
+            try {
+                return Language.getLanguage(languageCode);
+            } catch (IOException e) {
+                throw new LanguageFileNotFoundException("Language code not found: "+languageCode);
+            }
+        }
+        else{
+            return null;
+        }
     }
 }

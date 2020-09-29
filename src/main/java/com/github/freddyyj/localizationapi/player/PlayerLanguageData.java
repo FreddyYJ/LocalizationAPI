@@ -1,6 +1,8 @@
-package com.github.freddyyj.localizationapi.langfile;
+package com.github.freddyyj.localizationapi.player;
 
 import com.github.freddyyj.localizationapi.Core;
+import com.github.freddyyj.localizationapi.langfile.Language;
+import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -49,7 +51,7 @@ public class PlayerLanguageData{
      * Reload player language data.
      * <p>
      *     This method only load from file.
-     *     It doesn't reload {@link LanguageFile}, {@link com.github.freddyyj.localizationapi.Language}, {@link com.github.freddyyj.localizationapi.PlayerLocalization}, or other.
+     *     It doesn't reload {@link LanguageFile}, {@link Language}, {@link com.github.freddyyj.localizationapi.PlayerLocalization}, or other.
      * </p>
      */
     public void load(){

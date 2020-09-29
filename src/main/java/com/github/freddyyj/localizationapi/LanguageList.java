@@ -52,7 +52,7 @@ public class LanguageList {
      * @return instance of this class
      * @throws IOException throws when problem at reading file, especially file not found.
      */
-    static LanguageList getInstance(Core core) throws IOException {
+    public static LanguageList getInstance(Core core) throws IOException {
         if (instance==null) instance=new LanguageList(core);
         return instance;
     }

@@ -1,4 +1,4 @@
-package com.github.freddyyj.localizationapi;
+package com.github.freddyyj.localizationapi.langfile;
 
 /**
  * Keys that language file should have.

@@ -1,6 +1,8 @@
 package com.github.freddyyj.localizationapi;
 
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
+import com.github.freddyyj.localizationapi.langfile.Language;
+import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class PlayerLocalization {
         this.player=player;
 
         try {
-            language=Language.getLanguage(languageCode);
+            language= Language.getLanguage(languageCode);
         } catch (IOException e) {
             throw new LanguageFileNotFoundException("Language file ("+languageCode+".json) not found! ",e);
         }
@@ -117,6 +119,7 @@ public class PlayerLocalization {
      */
     public void setLanguage(Language language){
         this.language=language;
+        Core.getLanguageData().setPlayerLanguageCode(player.getUniqueId(),language.getLanguageCode());
     }
 
 }

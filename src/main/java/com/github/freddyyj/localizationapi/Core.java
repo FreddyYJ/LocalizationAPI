@@ -1,6 +1,10 @@
 package com.github.freddyyj.localizationapi;
 
-import com.github.freddyyj.localizationapi.langfile.PlayerLanguageData;
+import com.github.freddyyj.localizationapi.langfile.DefaultKey;
+import com.github.freddyyj.localizationapi.langfile.Language;
+import com.github.freddyyj.localizationapi.langfile.LanguageFile;
+import com.github.freddyyj.localizationapi.player.PlayerLanguageData;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -54,7 +58,7 @@ public class Core extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this,this);
 
         try {
-            Language.reload();
+            Language.reloadAll();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,12 +80,12 @@ public class Core extends JavaPlugin implements Listener {
                     Writer writer=new FileWriter(english);
 
                     writer.write("{\n");
-                    writer.write("    \""+DefaultKey.NAME.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
-                    writer.write("    \""+DefaultKey.REGION.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
-                    writer.write("    \""+DefaultKey.CODE.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
+                    writer.write("    \""+ DefaultKey.NAME.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getLocalName()+"\",\n");
+                    writer.write("    \""+ DefaultKey.REGION.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getRegion()+"\",\n");
+                    writer.write("    \""+ DefaultKey.CODE.toString()+"\": \""+availableLanguageList.getLanguageInfo("en_us").getCode()+"\"\n");
                     writer.write("}");
                     writer.close();
-                    Language.reload();
+                    Language.reloadAll();
                     languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -139,7 +143,6 @@ public class Core extends JavaPlugin implements Listener {
                         sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                         return true;
                     }
-                    languageSavefile.setPlayerLanguageCode((targetPlayer).getUniqueId(),args[1]);
 
                     sender.sendMessage(PREFIX+"Language of "+targetPlayer.getName()+" set to "+args[1]);
                     return true;
@@ -152,7 +155,6 @@ public class Core extends JavaPlugin implements Listener {
                     sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                     return true;
                 }
-                languageSavefile.setPlayerLanguageCode(((Player) sender).getUniqueId(),args[1]);
 
                 sender.sendMessage(PREFIX+"Language set to "+args[1]);
                 return true;
@@ -168,7 +170,7 @@ public class Core extends JavaPlugin implements Listener {
             sender.sendMessage(PREFIX+"Current language list:");
             for (int i=0;i<languageCodeList.length;i++){
                 try {
-                    sender.sendMessage(PREFIX+Language.getLanguage(languageCodeList[i]).getName()+": "+languageCodeList[i]);
+                    sender.sendMessage(PREFIX+ Language.getLanguage(languageCodeList[i]).getName()+": "+languageCodeList[i]);
                 } catch (IOException e) {
                     e.printStackTrace();
                     return true;
