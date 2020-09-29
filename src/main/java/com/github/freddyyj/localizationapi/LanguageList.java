@@ -95,4 +95,7 @@ public class LanguageList {
     public LanguageInfo getLanguageInfo(String languageCode){
         return languageList.get(languageCode);
     }
+    HashMap<String,LanguageInfo> getLanguageInfos(){
+        return languageList;
+    }
 }

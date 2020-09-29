@@ -59,6 +59,8 @@ public class Language {
 
         region=file.getString(DefaultKey.REGION.toString());
         if (region==null) throw new NullPointerException("No language region specified! Add language.region in language file.");
+
+        languageList.put(languageCode,this);
     }
 
     /**

@@ -17,7 +17,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Main class for LocalizationAPI. Extends {@link JavaPlugin}. Don't create this object manually.
@@ -145,6 +147,15 @@ public class Core extends JavaPlugin implements Listener {
             else printCommandError(sender);
             return true;
         }
+        else if (args.length>=2 && args[0].equals("create") && sender.hasPermission("localization.create")){ // /lang create <code>
+            if (Language.createNewLanguage(args[1])==null){
+                sender.sendMessage(PREFIX+"No language code found! Use /lang available to check all available languages.");
+                return true;
+            }
+            languageCodeList= Language.getLanguageCodes().toArray(new String[0]);
+            sender.sendMessage(PREFIX+"New language created: "+args[1]);
+            return true;
+        }
         else if (args[0].equals("test") && sender instanceof Player && sender.hasPermission("localization.test")){ // /lang test
             sender.sendMessage(PREFIX+PlayerLocalization.fromPlayer((Player) sender).getMessage("message.welcome"));
             return true;
@@ -159,6 +170,15 @@ public class Core extends JavaPlugin implements Listener {
                     return true;
                 }
             }
+            return true;
+        }
+        else if (args[0].equals("available") && sender.hasPermission("localization.available")){ // /lang available
+            HashMap<String,LanguageInfo> info=availableLanguageList.getLanguageInfos();
+            ArrayList<String> codes=new ArrayList<>();
+            for (int i=0;i<info.keySet().size();i++){
+                codes.add(info.keySet().toArray(new String[0])[i]);
+            }
+            sender.sendMessage(PREFIX+"Available language list for create: "+codes.toString());
             return true;
         }
         else {
@@ -198,6 +218,8 @@ public class Core extends JavaPlugin implements Listener {
             sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang set <language code>"+ChatColor.WHITE+": Change your current language.");
         if (sender.hasPermission("localization.test")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang test"+ChatColor.WHITE+": Test with default message(message.welcome).");
         if (sender.hasPermission("localization.list")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang list"+ChatColor.WHITE+": Show language list.");
+        if (sender.hasPermission("localization.available")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang available"+ChatColor.WHITE+": Show available list that can created new.");
+        if (sender.hasPermission("localization.create")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang create <language code>"+ChatColor.WHITE+": Create new language file with default values.");
     }
     private void printCommandList(CommandSender sender){
         sender.sendMessage(PREFIX+"Command list:");
@@ -212,6 +234,8 @@ public class Core extends JavaPlugin implements Listener {
             sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang set <language code>"+ChatColor.WHITE+": Change your current language.");
         if (sender.hasPermission("localization.test")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang test"+ChatColor.WHITE+": Test with default message(message.welcome).");
         if (sender.hasPermission("localization.list")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang list"+ChatColor.WHITE+": Show language list.");
+        if (sender.hasPermission("localization.available")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang available"+ChatColor.WHITE+": Show available list that can created new.");
+        if (sender.hasPermission("localization.create")) sender.sendMessage(PREFIX+ChatColor.YELLOW+"/lang create <language code>"+ChatColor.WHITE+": Create new language file with default values.");
     }
 
     /**
