@@ -7,19 +7,13 @@ I need lots of test, feedbacks and reports. Please comment at plugin page, or Gi
 
 # How to install
 Installation of this plugin is same as other plugins. But, it needs default language file called 'en_us.json'.
-1. Create en_us.json with key text and value text. For example,
-```
-    {
-        "message1":"Hello",
-        "message2":"World!",
-        ...
-    }
-```
-2. Add this file at (your server directory)/plugin/LocalizationAPI/lang.
-3. Add plugin file at /plugin.
-4. That's all!
+1. install .jar file under plugins folder.
+2. Run server.
+3. Stop server, and ``` en_us.json ``` will be created in plugins/LocalizationAPI/lang.
+4. Add your custom translations in ``` en_us.json ```.
+5. Run server again, and enjoy!
 
-For developers, visit wiki or https://freddyyj.github.io/LocalizationAPI/.
+For developers, visit wiki or (docs){https://freddyyj.github.io/LocalizationAPI/}.
 
 # Commands
 ```/lang```
