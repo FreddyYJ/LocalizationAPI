@@ -13,7 +13,7 @@ Installation of this plugin is same as other plugins. But, it needs default lang
 4. Add your custom translations in ``` en_us.json ```.
 5. Run server again, and enjoy!
 
-For developers, visit wiki or {docs}(https://freddyyj.github.io/LocalizationAPI/).
+For developers, visit wiki or [docs](https://freddyyj.github.io/LocalizationAPI/).
 
 # Commands
 ```/lang```
