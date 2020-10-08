@@ -1,8 +1,6 @@
 package com.github.freddyyj.localizationapi;
 
-import com.github.freddyyj.localizationapi.langfile.DefaultKey;
 import com.github.freddyyj.localizationapi.langfile.Language;
-import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import com.github.freddyyj.localizationapi.player.PlayerLanguageData;
 
 import org.bukkit.Bukkit;

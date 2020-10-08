@@ -1,7 +1,6 @@
 package com.github.freddyyj.localizationapi;
 
 import com.github.freddyyj.localizationapi.langfile.Language;
-import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 
 /**
  * Information of languages.

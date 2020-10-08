@@ -2,7 +2,6 @@ package com.github.freddyyj.localizationapi;
 
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import com.github.freddyyj.localizationapi.langfile.Language;
-import com.github.freddyyj.localizationapi.langfile.LanguageFile;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;

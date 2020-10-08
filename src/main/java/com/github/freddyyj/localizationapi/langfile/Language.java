@@ -1,7 +1,6 @@
 package com.github.freddyyj.localizationapi.langfile;
 
 import com.github.freddyyj.localizationapi.Core;
-import com.github.freddyyj.localizationapi.LanguageList;
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import org.jetbrains.annotations.Nullable;
 
@@ -175,21 +174,61 @@ public class Language {
     static Map<String, Language> getLanguageList(){
         return languageList;
     }
+
+    /**
+     * Reload current language translation.
+     */
     public void reload(){
         file.reload();
     }
+
+    /**
+     * Add new translation.
+     * @param key key string
+     * @param value value string
+     */
     public void addText(String key,String value){
         file.add(key, value);
     }
+
+    /**
+     * Edit translation.
+     * @param key key string
+     * @param value value string
+     */
     public void editText(String key,String value){
         file.edit(key, value);
     }
+
+    /**
+     * Remove translation.
+     * @param key key string
+     */
     public void removeText(String key){
         file.remove(key);
     }
+
+    /**
+     * Save current states.
+     */
     public void save(){
         file.save();
     }
+
+    /**
+     * Create new language.
+     * <p>
+     *     If already exist, return exist one.
+     *
+     *     languageCode should be exist in {@link com.github.freddyyj.localizationapi.LanguageList}.
+     *     Use {@link com.github.freddyyj.localizationapi.LanguageList#hasLanguageInfo(String)} to check some language code exist.
+     *
+     *     If language code not available, returns null.
+     * </p>
+     * @param languageCode language code that available.
+     * @return created {@link Language} if not exist and available
+     */
+    @Nullable
     public static Language createNewLanguage(String languageCode){
         if (!Language.hasLanguage(languageCode) && Core.getAvailableLanguageList().hasLanguageInfo(languageCode)){
             try {

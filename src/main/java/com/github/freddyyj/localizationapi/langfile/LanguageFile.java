@@ -1,15 +1,12 @@
 package com.github.freddyyj.localizationapi.langfile;
 
 import com.github.freddyyj.localizationapi.Core;
-import com.github.freddyyj.localizationapi.langfile.DefaultKey;
 import com.github.freddyyj.localizationapi.exceptions.LanguageFileNotFoundException;
 import org.jetbrains.annotations.Nullable;
 
 import javax.json.*;
 import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * language file class
@@ -22,6 +19,9 @@ import java.util.Set;
  *
  *     This objects will be created at {@link Language}.
  *     Don't create this object manually, access for {@link Language}.
+ *
+ *     Adding, editing, or removing texts with {@link LanguageFile} is not recommended.
+ *     Use {@link Language} methods instead.
  * </p>
  * @author FreddyYJ_
  */
@@ -84,15 +84,51 @@ public class LanguageFile {
     public String getLanguageCode(){
         return languageCode;
     }
+
+    /**
+     * Add new translation.
+     * <p>
+     *     Same works with {@link LanguageFile#edit(String, String)}.
+     *
+     *     {@link Language#addText(String, String)} is more recommended.
+     * </p>
+     * @param key key string
+     * @param value value string
+     */
     public void add(String key,String value){
         stringList.put(key, value);
     }
+
+    /**
+     * Edit translation.
+     * <p>
+     *     Same works with {@link LanguageFile#add(String, String)}.
+     *
+     *     {@link Language#editText(String, String)} is more recommended.
+     * </p>
+     * @param key key string
+     * @param value value string
+     */
     public void edit(String key,String value){
         stringList.put(key,value);
     }
+
+    /**
+     * Remove translation.
+     * <p>
+     *     Do nothing if not exist.
+     *
+     *     {@link Language#removeText(String)} is more recommended.
+     * </p>
+     * @param key key string
+     */
     public void remove(String key){
         stringList.remove(key);
     }
+
+    /**
+     * Reload file.
+     */
     public void reload(){
         stringList.clear();
         JsonReader reader= null;
@@ -111,6 +147,10 @@ public class LanguageFile {
 
         this.languageCode=stringList.get(DefaultKey.CODE.toString());
     }
+
+    /**
+     * Save current states.
+     */
     public void save(){
         JsonWriter writer;
         try {
