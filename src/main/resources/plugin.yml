@@ -1,6 +1,6 @@
 name: LocalizationAPI
 main: com.github.freddyyj.localizationapi.Core
-version: 0.0.4
+version: 0.2.0
 author: FreddyYJ_
 commands:
   lang:
@@ -29,3 +29,9 @@ permissions:
   localization.list:
     description: Permission to run /lang list
     default: true
+  localization.available:
+    description: Permission to run /lang available
+    default: op
+  localization.create:
+    description: Permission to run /lang create
+    default: op

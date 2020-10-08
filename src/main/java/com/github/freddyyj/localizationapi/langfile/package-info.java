@@ -1,4 +1,4 @@
 /**
- * package to manage config and language files, other files
+ * package related with each languages, include file access.
  */
 package com.github.freddyyj.localizationapi.langfile;
