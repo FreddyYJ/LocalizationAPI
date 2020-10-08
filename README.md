@@ -1,7 +1,7 @@
 # LocalizationAPI
 LocalizationAPI is Minecraft Spigot plugin for player localization. It supports translation by using language files.
 
-Current version is 0.1.0.
+Current version is 0.2.0.
 
 I need lots of test, feedbacks and reports. Please comment at plugin page, or Github issue.
 
@@ -68,6 +68,8 @@ v0.2.0
 * Add ```/lang create <langiage code>``` command to create new language file if it's included in ```/lang available```.
 * Change package structure for improvement.
 * All supported languages are added in JSON file in .jar.
+* No need to create default language file manually before initial runnung.
+* Add default keys in all language files.
 
 v0.1.0
 * Init plugin
