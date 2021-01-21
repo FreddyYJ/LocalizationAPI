@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.spigotmc:spigot-api:1.16.3-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+    implementation 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
     testCompile group: 'junit', name: 'junit', version: '4.12'
     runtimeClasspath 'javax.json:javax.json-api:1.1.4'
     runtimeClasspath 'org.glassfish:javax.json:1.1.4'
