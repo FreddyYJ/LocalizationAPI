@@ -1,13 +1,13 @@
 package com.github.freddyyj.localizationapi;
 
 import com.github.freddyyj.localizationapi.langfile.Language;
+import com.github.freddyyj.localizationapi.player.Player;
 import com.github.freddyyj.localizationapi.player.PlayerLanguageData;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -105,23 +105,23 @@ public class Core extends JavaPlugin implements Listener {
             printCommandList(sender);
             return true;
         }
-        else if (args[0].equals("get") && sender instanceof Player && sender.hasPermission("localization.get")){ // /lang get [player]
+        else if (args[0].equals("get") && sender instanceof org.bukkit.entity.Player && sender.hasPermission("localization.get")){ // /lang get [player]
             if (sender.hasPermission("localization.get.other") && args.length==2){
-                Player targetPlayer=Bukkit.getPlayer(args[1]);
+                org.bukkit.entity.Player targetPlayer=Bukkit.getPlayer(args[1]);
                 if (targetPlayer==null) throw new NullPointerException("Not exist player: "+args[1]);
-                else sender.sendMessage(PREFIX+"Current language of "+targetPlayer.getName()+": "+PlayerLocalization.fromPlayer(targetPlayer).getLanguage().getName());
+                else sender.sendMessage(PREFIX+"Current language of "+targetPlayer.getName()+": "+ Player.fromPlayer(targetPlayer).getLanguage().getName());
             }
-            else if (args.length==1) sender.sendMessage(PREFIX+"Current language: "+PlayerLocalization.fromPlayer((Player) sender).getLanguage().getName());
+            else if (args.length==1) sender.sendMessage(PREFIX+"Current language: "+ Player.fromPlayer((org.bukkit.entity.Player) sender).getLanguage().getName());
             else printCommandError(sender);
             return true;
         }
-        else if (args[0].equals("set") && args.length>=2 && sender instanceof Player && sender.hasPermission("localization.set")){ // /lang set <language code> [player]
+        else if (args[0].equals("set") && args.length>=2 && sender instanceof org.bukkit.entity.Player && sender.hasPermission("localization.set")){ // /lang set <language code> [player]
             if (args.length==3 && sender.hasPermission("localization.set.other")){
-                Player targetPlayer=Bukkit.getPlayer(args[2]);
+                org.bukkit.entity.Player targetPlayer=Bukkit.getPlayer(args[2]);
                 if (targetPlayer==null) throw new NullPointerException("Not exist player: "+args[2]);
                 else{
                     try {
-                        PlayerLocalization.fromPlayer(targetPlayer).setLanguage(Language.getLanguage(args[1]));
+                        Player.fromPlayer(targetPlayer).setLanguage(Language.getLanguage(args[1]));
                     } catch (IOException e) {
                         sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                         return true;
@@ -133,7 +133,7 @@ public class Core extends JavaPlugin implements Listener {
             }
             else if (args.length==2){
                 try {
-                    PlayerLocalization.fromPlayer((Player) sender).setLanguage(Language.getLanguage(args[1]));
+                    Player.fromPlayer((org.bukkit.entity.Player) sender).setLanguage(Language.getLanguage(args[1]));
                 } catch (IOException e) {
                     sender.sendMessage(PREFIX+"Language not found: "+args[1]);
                     return true;
@@ -154,8 +154,8 @@ public class Core extends JavaPlugin implements Listener {
             sender.sendMessage(PREFIX+"New language created: "+args[1]);
             return true;
         }
-        else if (args[0].equals("test") && sender instanceof Player && sender.hasPermission("localization.test")){ // /lang test
-            sender.sendMessage(PREFIX+PlayerLocalization.fromPlayer((Player) sender).getMessage("message.welcome"));
+        else if (args[0].equals("test") && sender instanceof org.bukkit.entity.Player && sender.hasPermission("localization.test")){ // /lang test
+            sender.sendMessage(PREFIX+ Player.fromPlayer((org.bukkit.entity.Player) sender).getMessage("message.welcome"));
             return true;
         }
         else if (args[0].equals("list") && sender.hasPermission("localization.list")){ // /lang list
@@ -245,7 +245,7 @@ public class Core extends JavaPlugin implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        PlayerLocalization player=PlayerLocalization.fromPlayer(e.getPlayer());
+        Player player= Player.fromPlayer(e.getPlayer());
         
         getLogger().info(player.toPlayer().getName()+" entered!");
     }
@@ -259,7 +259,7 @@ public class Core extends JavaPlugin implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent e){
-        PlayerLocalization.fromPlayer(e.getPlayer()).remove();
+        Player.fromPlayer(e.getPlayer()).remove();
 
         getLogger().info(e.getPlayer().getName()+" leave server. Localization data removed.");
     }

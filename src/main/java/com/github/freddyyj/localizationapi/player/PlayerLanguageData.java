@@ -51,7 +51,7 @@ public class PlayerLanguageData{
      * Reload player language data.
      * <p>
      *     This method only load from file.
-     *     It doesn't reload {@link LanguageFile}, {@link Language}, {@link com.github.freddyyj.localizationapi.PlayerLocalization}, or other.
+     *     It doesn't reload {@link LanguageFile}, {@link Language}, {@link Player}, or other.
      * </p>
      */
     public void load(){
